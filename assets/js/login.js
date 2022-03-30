@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2022-03-30 07:32:47
+ * @LastEditTime: 2022-03-30 10:33:36
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /BigEvent/assets/js/login.js
+ */
 $(function() {
     // 点击“去注册账号”的链接
     $('#link_reg').on('click', function() {
@@ -55,20 +63,31 @@ $(function() {
         // 阻止默认提交行为
         e.preventDefault()
         $.ajax({
-            url: '/api/login',
-            method: 'POST',
-            // 快速获取表单中的数据
-            data: $(this).serialize(),
-            success: function(res) {
-                if (res.status !== 0) {
-                    return layer.msg('登录失败！')
+                url: '/api/login',
+                method: 'POST',
+                // 快速获取表单中的数据
+                data: $(this).serialize(),
+                success: function(res) {
+                    if (res.status !== 0) {
+                        return layer.msg('登录失败！')
+                    }
+                    layer.msg('登录成功！')
+                        // 将登录成功得到的 token 字符串，保存到 localStorage 中
+                    localStorage.setItem('token', res.token)
+                        // 跳转到后台主页
+                    location.href = '/index.html'
                 }
-                layer.msg('登录成功！')
-                    // 将登录成功得到的 token 字符串，保存到 localStorage 中
-                localStorage.setItem('token', res.token)
-                    // 跳转到后台主页
-                location.href = '/index.html'
-            }
-        })
+            })
+            // var data = $(this).serialize()
+            // $.post('/api/login', data, (res) => {
+            //     if (res.status !== 0) {
+            //         return layer.msg('登录失败！')
+            //     }
+            //     layer.msg('登录成功！')
+            //         // 将登录成功得到的 token 字符串，保存到 localStorage 中
+            //     localStorage.setItem('token', res.token)
+            //         // 跳转到后台主页
+            //     location.href = '/index.html'
+            // })
     })
 })
